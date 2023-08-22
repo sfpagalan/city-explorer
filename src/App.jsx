@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
-import Explorer from './Explorer'; // Import the Explorer component
+import Explorer from './components/Explorer';
 
 class App extends Component {
   constructor(props) {
@@ -16,7 +16,7 @@ class App extends Component {
   fetchCityInfo = (cityName) => {
     if (cityName) {
       this.setState({ isLoading: true });
-
+  
       const apiKey = process.env.REACT_APP_API_KEY;
       const apiUrl = `https://us1.locationiq.com/v1/search.php?key=${apiKey}&q=${cityName}&format=json`;
 
