@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
-import Explorer from './Explorer'; // Import the Explorer component
+import Explorer from './components/Explorer';
 
 class App extends Component {
   constructor(props) {
@@ -16,7 +16,7 @@ class App extends Component {
   fetchCityInfo = (cityName) => {
     if (cityName) {
       this.setState({ isLoading: true });
-
+  
       const apiKey = process.env.REACT_APP_API_KEY;
       const apiUrl = `https://us1.locationiq.com/v1/search.php?key=${apiKey}&q=${cityName}&format=json`;
 
@@ -38,7 +38,6 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
           <h1>City Explorer</h1>
           <Explorer onExplore={this.fetchCityInfo} />
           {isLoading && <p>Loading...</p>}
@@ -47,6 +46,12 @@ class App extends Component {
               <h2>{cityInfo.display_name}</h2>
               <p>Latitude: {cityInfo.lat}</p>
               <p>Longitude: {cityInfo.lon}</p>
+              {cityInfo.lat && cityInfo.lon && (
+                <img
+                  src={`https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_API_KEY}&center=${cityInfo.lat},${cityInfo.lon}&zoom=10`}
+                  alt="City Map"
+                />
+              )}
             </div>
           )}
         </header>
