@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
-class Explorer extends Component {
+class Explorer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -29,5 +30,9 @@ class Explorer extends Component {
     );
   }
 }
+
+Explorer.propTypes = {
+  onExplore: PropTypes.func.isRequired,
+};
 
 export default Explorer;

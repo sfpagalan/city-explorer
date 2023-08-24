@@ -1,4 +1,4 @@
-import React from 'react';
+import PropTypes from 'prop-types';
 import Alert from 'react-bootstrap/Alert';
 
 const ErrorComponent = ({ statusCode, errorMessage }) => {
@@ -8,6 +8,11 @@ const ErrorComponent = ({ statusCode, errorMessage }) => {
             <p>{errorMessage}</p>
         </Alert>
     );
+};
+
+ErrorComponent.propTypes = {
+  statusCode: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+  errorMessage: PropTypes.string.isRequired,
 };
 
 export default ErrorComponent;
