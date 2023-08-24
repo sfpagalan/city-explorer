@@ -1,9 +1,10 @@
 import React from 'react';
-import axios from 'axios';
+import Axios from 'axios';
 import './App.css';
 import Explorer from './components/Explorer';
 import ErrorComponent from './components/ErrorComponent';
 import Weather from './components/Weather';
+import Movies from './components/Movies';
 
 class App extends React.Component {
   constructor(props) {
@@ -12,29 +13,39 @@ class App extends React.Component {
       cityInfo: null,
       isLoading: false,
       error: null,
-      weatherData: null, // Add weatherData state
+      weatherData: null,
+      moviesData: null,
     };
   }
 
   fetchCityInfo = (cityName) => {
     if (cityName) {
       this.setState({ isLoading: true, error: null });
-// eslint-disable-next-line no-unused-vars
+
       const apiKey = process.env.REACT_APP_API_KEY;
       const apiUrl = `https://us1.locationiq.com/v1/search.php?key=${apiKey}&q=${cityName}&format=json`;
 
-      axios
+      Axios
         .get(apiUrl)
         .then((response) => {
           this.setState({ cityInfo: response.data[0], isLoading: false });
 
-          axios
+          Axios
             .get(`/weather?lat=${response.data[0].lat}&lon=${response.data[0].lon}&searchQuery=${response.data[0].display_name}`)
             .then((weatherResponse) => {
               this.setState({ weatherData: weatherResponse.data });
             })
             .catch((error) => {
               console.error('Error fetching weather data:', error);
+            });
+
+          Axios
+            .get(`/movies?cityName=${cityName}`)
+            .then((moviesResponse) => {
+              this.setState({ moviesData: moviesResponse.data });
+            })
+            .catch((error) => {
+              console.error('Error fetching movies data:', error);
             });
         })
         .catch((error) => {
@@ -45,7 +56,7 @@ class App extends React.Component {
   };
 
   render() {
-    const { cityInfo, isLoading, error, weatherData } = this.state;
+    const { cityInfo, isLoading, error, weatherData, moviesData } = this.state;
 
     return (
       <div className="App">
@@ -75,6 +86,12 @@ class App extends React.Component {
                   lat={cityInfo.lat}
                   lon={cityInfo.lon}
                   searchQuery={cityInfo.display_name}
+                />
+              )}
+              {moviesData && (
+                <Movies
+                  cityName={cityInfo.display_name}
+                  moviesData={moviesData}
                 />
               )}
             </div>
