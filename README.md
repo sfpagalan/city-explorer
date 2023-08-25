@@ -130,6 +130,6 @@ Estimate of time needed to complete: 10 hrs
 
 Start time: 1500
 
-Finish time: 2000
+Finish time: 2001
 
 Actual time needed to complete: til 2359
