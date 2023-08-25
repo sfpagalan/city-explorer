@@ -4,7 +4,6 @@ import './App.css';
 import Explorer from './components/Explorer';
 import ErrorComponent from './components/ErrorComponent';
 import Weather from './components/Weather';
-import Movies from './components/Movies';
 
 class App extends React.Component {
   constructor(props) {
