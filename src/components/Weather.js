@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect, Component} from 'react';
 import PropTypes from 'prop-types';
+import WeatherDay from '@/components/WeatherDay';
 
 const Weather = ({ lat, lon }) => {
-    const [weatherData, setWeatherData] = useState([]);
+  const [weatherData, setWeatherData] = useState([]);
 
   useEffect(() => {
     fetch(`/weather?lat=${lat}&lon=${lon}`)
@@ -16,10 +17,7 @@ const Weather = ({ lat, lon }) => {
       <h2>Weather Forecast</h2>
       <div className="forecast-list">
         {weatherData.map((day, index) => (
-          <div className="forecast-item" key={index}>
-            <p>Date: {day.date}</p>
-            <p>Description: {day.description}</p>
-          </div>
+          <WeatherDay key={index} day={day} />
         ))}
       </div>
     </div>
